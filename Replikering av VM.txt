@@ -1,0 +1,19 @@
+Processen
+
+	• Avaktivera brandvägg på både hostar (På Domain nivå)
+	• Välja den Primära hosten och starta Hyper v manager.
+	• Aktivera replikeringen på både hostar via Hyper v inställningar.
+	• Se till att välja platsen man spara Replica filer på och vilken port ska man ta (Port 80 använder AD för authentisering via Kerberos)
+	• Högerklicka på VM på den Primära hosten och välj Enable Replication och följ guiden.
+
+PowerShell
+
+# Disable the All firewall profile
+Set-NetFirewallProfile -Profile Domain,Public,Private -Enabled False
+
+# Enable the All firewall profile
+Set-NetFirewallProfile -Profile Domain,Public,Private -Enabled True
+
+# Check the status of the firewall profiles
+Get-NetFirewallProfile
+

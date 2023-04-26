@@ -1,0 +1,10 @@
+För att skapa flera identiska virtuella maskiner med olika SID (System Identifier), för att det är både effektivt och snabbare än att skapa nya vm från scratch, bör du göra följande steg:
+1. Klona den ursprungliga virtuella maskinen till en ny virtuell maskin med hjälp av verktyget för virtuell maskinskapning (t.ex. Hyper-V, VMware, VirtualBox) om du vill fortsätta använda använda samma ursprungliga VM vidare för att annars efter denna process kan du inte göra det.
+2. Starta den nya virtuella maskinen  (alltså kopian) och logga in på den som administratör.
+3. Klicka på Windows knappen+R -> Skriv Sysprep -> Dubbelklicka på sysprep.exe.
+4. Välj "System Cleanup Action eller Systemrensbibgsåtgärd" och välj "OOBE" (Out-of-Box-Experience).
+5. Välj "Generalize" och Avstängningsmetod -> Stäng av  klicka på OK.
+6. När sysprep är klart, stängs av den virtuella maskinen.
+7. Upprepa stegen 1 till 6 för varje ny virtuell maskin du vill skapa.
+
+Obs: Efter att du har kört Sysprep på en virtuell maskin, kan du inte använda den för att skapa andra virtuella maskiner (alltså man kan köra sysprep på sysprep). Du måste alltid starta en ny virtuell maskin från den ursprungliga installationen av operativsystemet.

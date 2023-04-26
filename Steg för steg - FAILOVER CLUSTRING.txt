@@ -1,0 +1,62 @@
+
+Förberedelser:
+
+	1. Kontrollera att noderna HV01 och HV02 körs på samma version av Windows Server och att de är anslutna till domänen.
+	2. Installera Hyper-V-rollen på noderna.
+	3. Se till att nätverkskonfigurationen är korrekt inställd på noderna, IP, DNS och subnät.
+	
+DC01: 192.168.100.1 DNS:192.168.100.1/24
+HV01: 192.168.100.11 DNS:192.168.100.1/24
+HV02: 192.168.100.21 DNS:192.168.100.1/24
+
+
+På DC01:
+	1. Lägg till 3st virtuella diskar på 20 Gb via Hyper V på hosten (Scsi controller)
+	2. Skapa Storage Pool i server Manager (Slå ihop de 3 diskarna) och döp den till SP1.
+	3. Skapa 2st Virtuella Diskar, en på 50 GB (VD01) för lagring och en Qorum på 1GB (VD02)
+	4. Skapa 2st ISCSI Diskar efter att man har installerat ISCSI target server rollen via Server Manager eller via PowerShell:
+	Install-WindowsFeature FS-iSCSITarget-Server -IncludeManagementTools
+	
+PÅ HV01:
+	1. På Tools: Starta ISCSI Initiator för att koppla upp ISCSI diskarna.
+	Discovery -> Discover portal -> Sätt i 192.168.100.1 (DC01) ->advanced-> local adapter: Microsoft.. -> Initiator IP: 192.168.100.11+ OK
+På target klicka på connect. (Gör samma sak på HV02 ->Initiator IP: 192.168.100.21)
+	2. På Disk managment : Sätt diskarna Online, initiera och utdela enhetsbeteckning.
+	3. Installera Failover clustering feature via Server Manager eller PowerShell: Install-WindowsFeature -Name Failover-Clustering -IncludeManagementTools
+	Starta om. (Gör samma sak på HV02)
+	4. Starta Failover manager -> validera -> välja HV01 och HV02
+	5. Skapa kluster: välj HV01  -> Sätt ett namn för klustret och 192.168.100.30 som IP.
+	6. Lägg till HV02 som node.
+	7. På Storage -> Lägg till diskar -> På den stora disken högerklicka-> Add cluster shared volume
+	8. På Klustret -> Högerklicka -> More actions  -> Configure cluster qorum settings -> Select the qorum witness -> Next -> Configure a disk witness -> Markera qorum disken -> Next
+
+	
+
+
+Failover-klustring är en teknik för att säkerställa hög tillgänglighet och oredigerbarhet för system och tjänster genom att använda flera noder i ett kluster. När en nod blir otillgänglig, tar en annan nod automatiskt över dess arbetsbelastning, så att tjänsterna fortsätter att vara tillgängliga för användare. Detta minskar risken för avbrott och ökar drifttiden för system och tjänster.
+
+Quorum en viktig teknik för att säkerställa hög tillgänglighet och driftsäkerhet. Genom att använda quorum kan man säkerställa att systemet fortfarande fungerar även om en del av noderna i klustret inte är tillgängliga.
+
+SAN står för Storage Area Network och är ett nätverk som är specifikt designat för att hantera och överföra data mellan datalagringsenheter och serverna i ett nätverk. SAN använder sig av Fibre Channel-protokollet för att överföra data med hög hastighet, låg latens och tillförlitlighet.
+
+DAS står för Direct Attached Storage och är en teknik för datalagring där enheter för lagring direkt ansluts till en enstaka dator eller server. I ett DAS-system är varje dator eller server direkt ansluten till en eller flera externa enheter för lagring, som exempelvis en extern hårddisk eller en diskarray. Dedikerat låda så att flera datorer kan ansluta den.
+
+JBOD står för Just a Bunch of Disks och är en teknik för datalagring där enheter för lagring är direkt anslutna till en dator eller server. I en JBOD-konfiguration är varje enhet för lagring oberoende och tillgänglig som en separat enhet.
+JBOD används ofta för att bygga ut lagringen i en dator eller server genom att ansluta flera enheter för lagring till samma system. Det är en enkel och kostnadseffektiv teknik för datalagring, men har begränsningar när det gäller tillgänglighet, säkerhet och skalbarhet.
+
+EIDE står för Enhanced Integrated Drive Electronics och är en äldre teknik för anslutning av externa enheter för lagring till en dator eller server. EIDE är en uppgradering av den tidigare IDE-tekniken (Integrated Drive Electronics) och ger högre hastigheter och större kapacitet för externa enheter för lagring.
+
+EIDE-tekniken används inte längre i nya datorer och servern, och har ersatts av tekniker som SATA (Serial ATA) och SAS (Serial Attached SCSI). SATA och SAS ger högre hastigheter och större kapacitet för externa enheter för lagring, samt ger bättre prestanda och stöd för flera enheter samtidigt.
+
+Hot-swap är en funktion som tillåter en enhet att bytas ut utan att stänga av den primära enheten som den är ansluten till. Detta innebär att en defekt enhet kan bytas ut utan att stänga av systemet, vilket sparar tid och förbättrar tillgängligheten.
+
+Anders GUIDE
+
+1.Se till att alla servrar har liknande HAL.
+2.Konfigurera en gemensam lagring t.e.xvia SAN (+ en liten Quorum-disk vid behov).
+3.Installera Roller/Features/Program som skall klustras.
+4.Installera FailOver Cluster Feature på varje server/nod
+5.SkapaettnyttClusterochläggtillallanoder.
+6.Konfigurera Quorum
+7.Konfigurera Cluster SharedVolumes
+8.Konfigurera Cluster-roller och services 

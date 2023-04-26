@@ -1,0 +1,22 @@
+
+Följande steg beskriver hur en failover går till i Hyper-V:
+
+1. Konfigurera replikering: Först måste du konfigurera replikering av den virtuella datorn du vill säkerhetskopiera från en huvudplats till en sekundär plats. Detta görs via Hyper-V Manager eller med hjälp av en skriptlösning.
+2. Övervaka replikeringen: När replikeringen är konfigurerad, måste du övervaka replikeringen för att säkerställa att all data är uppdaterad på sekundärplatsen.
+3. Aktivera failover: När huvudplatsen inte längre är tillgänglig eller när du manuellt väljer att starta failover, aktiveras den sekundära virtuella datorn.
+4. Starta den sekundära virtuella datorn: När failover aktiveras, startas den sekundära virtuella datorn och alla användare kan fortsätta arbeta på den.
+5. Uppdatera nätverkskonfigurationen: När den sekundära virtuella datorn har startats upp, måste du uppdatera nätverkskonfigurationen för att den virtuella datorn ska kunna kommunicera med andra enheter.
+
+
+#Stänga av brandväggen i core3 via powershell:
+Set-NetFirewallProfile -Profile Domain,Public,Private -Enabled False
+
+Hyper-V failover är en av de mest använda metoderna för att säkerställa att affärskritiska virtuella datorer är tillgängliga vid driftsstopp. Det är enkel att använda och ger en säker säkerhetskopia för affärskritiska virtuella datorer.
+
+Failover i Hyper-V sker när en primär virtuell dator (VM) blir skadad eller stängs av av någon annan orsak och en sekundär virtuell dator (replika) startas istället. 
+
+Reverse failover för att gå tillbaka från replica servern till primära servern.
+
+Remove replication om man vill ta bort replikering
+
+SID Security Idientifier (En unik  identifierare för datorer, användare och grupper i Active Directory)

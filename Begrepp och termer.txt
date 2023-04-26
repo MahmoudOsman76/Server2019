@@ -1,0 +1,30 @@
+Sätten att flytta filer:
+https://4sysops.com/archives/copy-files-between-hyper-v-and-a-guest-vm/
+
+VMotion är en funktion på VMware-plattformen som möjliggör live-migration av virtuella maskiner från en fysisk värd till en annan, utan att användarna märker av någon avbrott eller förlust av anslutning. Detta gör det möjligt för administratörer att flytta virtuella maskiner mellan fysiska servrar i ett kluster utan att behöva stänga av maskinen, vilket minskar nedetid och underhållstider.
+
+VMware Tools är en programvara som kan installeras på en virtuell maskin för att förbättra dess prestanda och funktionalitet. Det är ett paket med drivrutiner och verktyg som optimerar kommunikationen mellan värdmaskinen och den virtuella maskinen, vilket gör att de kan fungera mer sömlöst tillsammans.
+
+Portgroups används för att organisera trafikflödet på en virtuell switch och kan konfigureras med olika inställningar som till exempel VLAN-ID, QoS-policy, och säkerhetspolicy. Genom att använda portgroups kan administratörer skapa logiska segment på en fysisk nätverksanslutning, vilket gör det möjligt att isolera och kontrollera trafiken mellan virtuella maskiner och tillåta kommunikation endast där det är nödvändigt.
+
+En snapshot är en ögonblicksbild av den aktuella tillståndet för den virtuella maskinen, inklusive dess virtuella hårddisk, virtuella minne och andra inställningar. När en snapshot tas skapas en differensdisk som innehåller alla ändringar som gjorts sedan snapshoten togs. Alla nya ändringar som görs på den virtuella maskinen sparas i differensdisken istället för på den ursprungliga virtuella hårddisken.
+
+En Typ 1 hypervisor, även kallad native eller bare-metal hypervisor, installeras direkt på fysisk hårdvara och kan köra flera virtuella maskiner direkt på hårdvaran. Exempel på Typ 1 hypervisors inkluderar VMware ESXi, Microsoft Hyper-V och Citrix Hypervisor.
+
+En Typ 2 hypervisor, även kallad hosted hypervisor, installeras som en applikation på ett operativsystem och kan köra virtuella maskiner inuti detta operativsystem. Exempel på Typ 2 hypervisors inkluderar Oracle VirtualBox och VMware Workstation.nested.
+
+Nested virtualisering är en teknik som tillåter en virtuell maskin att fungera som en hypervisor och möjliggör därmed att skapa en virtuell maskin inuti en annan virtuell maskin. Detta innebär att en användare kan köra en hypervisor, som VMware ESXi, Microsoft Hyper-V eller Xen, i en virtuell maskin, och därigenom skapa en virtuell miljö inuti en annan virtuell miljö.
+
+Hyper-V Replica är en funktion i Microsofts Hyper-V virtualiseringsplattform som möjliggör replikering av virtuella maskiner (VM) från en Hyper-V-värd till en annan. Replikeringen kan ske antingen på samma lokala plats eller på en annan plats över ett WAN. Den replikerar en virtuell maskin från en primär Hyper-V-värd till en sekundär Hyper-V-värd genom att skicka en kopia av virtuella hårddiskar och konfigurationsfiler. Replikeringen kan ske med en låg fördröjning, vilket gör det möjligt att återställa virtuella maskiner till en tidpunkt strax före ett oväntat fel eller haveri. Funktionen möjliggör även automatisk failover av virtuella maskiner från en primär Hyper-V-värd till en sekundär värd vid en störning eller fel på primärvärden. Detta säkerställer hög tillgänglighet och minskar risken för förlust av data.
+
+Sysprep är ett verktyg som ingår i Microsoft Windows operativsystem som används för att förbereda en installation av Windows för duplication, dvs. kloning eller distribution till flera datorer med liknande konfiguration. Det kan användas för att återställa en Windows-installation till sitt ursprungliga fabriksinställningar eller för att skapa en skräddarsydd Windows-installation som kan distribueras till flera datorer i en organisation.
+
+VSS står för Volume Shadow Copy Service och är en teknik som är inbyggd i Microsoft Windows-operativsystemet. VSS möjliggör skapande av säkerhetskopior av filer och mappar som används av operativsystemet eller andra program, även om filerna är låsta eller i användning vid tidpunkten för säkerhetskopieringen.
+
+System State Backup är en typ av säkerhetskopiering som fokuserar på att säkerhetskopiera de delar av Windows-operativsystemet som är nödvändiga för att återställa systemet efter en katastrof, till exempel en systemkrasch eller en attacker av skadlig kod. System State Backup inkluderar viktiga systemfiler, registreringsdatabaser, Active Directory-databaser, systemstartfiler och andra filer som är nödvändiga för att operativsystemet ska fungera korrekt.
+
+VDI innebär att varje användare har en dedikerad virtuell maskin som körs på en server, och användarna kan ansluta till sina virtuella desktopmiljöer från sina egna enheter. Varje virtuell maskin har sitt eget operativsystem, programvara och data, vilket ger användarna en hög grad av anpassning och flexibilitet. VDI är särskilt lämpligt för organisationer där användarna behöver tillgång till avancerade applikationer och där kraven på anpassning och säkerhet är höga.
+
+RDS innebär att flera användare delar samma servermiljö och kan ansluta till sina virtuella desktopmiljöer från vilken enhet som helst via en fjärranslutning. Detta innebär att det endast finns en instans av operativsystemet och programvaran som delas av alla användare, vilket gör det lättare att underhålla och uppdatera miljön. RDS är vanligtvis bäst lämpat för organisationer med mindre krav på anpassning och där användare har enklare programkrav.
+
+Ett roaming profile är en typ av användarprofil i Windows som gör att en användare kan logga in på vilken dator som helst i ett nätverk och ha tillgång till sina personliga inställningar, filer och program. När en användare loggar in på en dator, hämtar datorn användarens roaming profile från en central server och använder den för att konfigurera användarens desktopmiljö.

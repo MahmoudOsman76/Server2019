@@ -1,0 +1,61 @@
+På Hyper V på labb servern:
+	1. Skapa en Internal Switch och döp den till IntSwitch1.
+	2. Skapa 3st servrar HV01, HV02 och DC01.
+	Kriterierna:
+	4096 Gb RAM
+	50 GB HDD
+	Kopplas till IntSwitch1
+	Win 2019 Datacenter Desktop Experience
+	DC01: 192.168.100.1/24
+	HV01: 192.168.100.11/24
+	HV02: 192.168.100.21/24
+
+På DC01:
+	3. Döpa om servern till DC01
+	4. Lägg till IP: 192.168.100.1/24   och DNS: 192.168.100.1
+	5. Starta om.
+	6. I Server Manager: Installera: AD DS rollen.
+	7. Lägga till domain:  mindom.local
+	
+I Active Directory: 
+	8. Skapa nya OU:
+VXO =>Användare
+         =>Datorer=>Server
+                           =>Laptop
+
+(Efter du har skapat HV01 och HV02 och anslutit dem till mindom.local)
+	9. Flytta HV01 server till Server OU 
+(
+VXO =>Datorer=>Server
+                           =>Laptop
+)
+	10. Skapa ny admin (Kopiera Administrator profilen) och flytta den till Användare OU
+(
+VXO =>Användare
+  }
+
+I Group Policy Managment:
+	11. Ändra i default domain Controllers policy (Computer Configuration -> Windows Settings -> Security Settings -> disable User Account Control: Run all administrators in Admin Approval Mode.
+
+I Labb Server:
+	12. Aktivera Nested Virtualization på HV01 via PowerShell genom:
+Set-VMProcessor -VMName HV01 -ExposeVirtualizationExtensions $true
+
+	13. I Hyper-V stäng av HV01.
+	14. Lägga till ny Network Adapter IntSwitch1 på HV01.
+	15. På advanced features på det nya adaptern, kryssa i Enable MAC Adress spoofing
+	16. Utdela HV01 3 st processorer.
+	17. Starta HV01 och lägg till Hyper V rollen, starta om HV01.
+	18. Tilldela ETHERNET 2: 192.168.100.12/24 DNS:192.168.100.1
+	19. Skapa 2st mappar på C disken , döp dem till VM och ISO
+	20. Stänga av HV01 och sedan i Labb Servern -> Gå till ISO mappen och kopiera Windows server 2019 iso filen.
+	21. Gå in  på C:\VirtualMachines\HV01\Hard Disks\HV01.vhdx och dubbelklicka på Vhdx filen (Mounta den, då öppnas den upp som E disk i utforskaren).
+	22. På E disken, gå in på ISO mappen och klistra in WS2019 filen. 
+	23. När det är klart, högerklicka på E disken och välj Eject.
+	24. Starta HV01 och skapa i Hyper V inuti en ny virtuell External Network Adapter, döp den till  EXTSwitch , Välj adapter #2.
+	25. Skapa första VM som heter Core1,1024mb i RAM, 15 GB HDD och EXTSwitch, Windows server 2019 standard.
+	26. Välj ett lösenord efter installation och skriv Sconfig för att komma till inställningar.
+	27. Byt namn till Core1.
+	28. Sätt IP till: 192.168.100.101/24 och DNS 192.168.100.1 och anslut den till mindom.local.
+	29. Gör 12-24 för HV02.
+	

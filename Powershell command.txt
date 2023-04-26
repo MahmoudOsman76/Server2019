@@ -1,0 +1,82 @@
+#Visa nätverkskonfiguration
+Get-NetIPConfiguration
+
+#För att ta reda på adaptrar
+Get-NetIpInterface
+
+#Visa Nätverkskortet
+Get-NetAdapter
+
+#Visa ip
+Get-NetIpAdress
+
+#Visa bara ipv4 adresser
+Get-NetIPAddress -AddressFamily  IPv4
+
+#Avaktivera IPV6
+Disable-NetAdapterBinding -Name 'Ethernet' -ComponentID 'ms_tcpip6'
+
+#Lägga till IP adress
+New-NetIPAddress -interfaceIndex 2 -IPAddress 192.168.100.102 -PrefixLength 24
+eller
+New-NetIPAddress -InterfaceAlias Ethernet -IPAddress 192.168.100.41 -PrefixLength 24
+
+#Ta bort IP
+Remove-NetIPAddress -InterfaceAlias Ethernet -IPAddress 192.168.100.150
+
+#Lägga till DNS
+Set-DnsClientServerAddress -InterfaceIndex 2 -ServerAddresses ("192.168.100.1")
+
+#Lägga till gateway
+New-NetRoute -DestinationPrefix 0.0.0.0/0 -NextHop 192.168.100.99 -InterfaceIndex 4
+
+#Ta bort gateway
+Remove-NetRoute -DestinationPrefix 0.0.0.0/0 -NextHop 192.168.100.99
+
+#Lägga till dator i domain
+Add-Computer  -DomainName mindom 
+
+#Lägg till dator i specifik OU
+Add-Computer -DomainName mindom -OUPath OU=Server,OU=Datorer,OU=VXO,DC=mindom,DC=local" 
+
+#Byta datornamn
+Rename-Computer -NewName "nyaNamnet"-Restart
+
+#Starta om dator
+Restart-Computer
+
+#Ta ut dator från domain
+Remove-Computer -UnjoinDomainCredential (Get-Credential) -PassThru -Verbose -ComputerName datornamn
+
+#Ta bort dator från AD
+Get-ADComputer -Identity Datornamn| Remove-ADComputer
+
+#Stänga av brandväggen 
+Set-NetFirewallProfile -Profile Domain,Public,Private -Enabled False
+
+#Lista ut NTFS behörigheter på en delad mapp
+Get-acl \\WIN-RA73TRT6ISY\Users | format-list
+
+#Se status på roles och features på servern
+Get-windowsfeature
+
+#Ta fram vilka roles och features som är installerade på servern
+Get-WindowsFeature | Where-Object {$_. installstate -eq "installed"}
+Eller
+Get-WindowsFeature | Where-Object {$_. installstate -eq "installed"} | select Name,Installstate
+
+#Hämta Uptime för servern
+(get-date) – (gcim Win32_OperatingSystem).LastBootUpTime
+
+# Stänga av alla brandväggar 
+Set-NetFirewallProfile -Profile Domain,Public,Private -Enabled False
+
+# Aktivera alla brandväggar 
+Set-NetFirewallProfile -Profile Domain,Public,Private -Enabled True
+
+# Kolla brandvägg status
+Get-NetFirewallProfile
+
+Aktivera Nested Virtualization på HV01 via PowerShell genom:
+Set-VMProcessor -VMName HV01 -ExposeVirtualizationExtensions $true
+

@@ -1,0 +1,32 @@
+För att skapa en Active Directory på Windows Server 2019 behöver du följa följande steg:
+
+Steg 1: 
+Först måste du installera Active Directory Domain Services-roller och funktioner på din Windows Server 2019. Gör så här:
+
+1. Öppna Server Manager
+2. Klicka på ”Manage” längst upp till höger på skärmen och välj sedan ”Add Roles and Features”.
+3. Klicka på ”Next” och välj sedan ”Role-based or feature-based installation”.
+4. Välj servern där du vill installera rollen och klicka på ”Next”.
+5. Klicka på ”Active Directory Domain Services” i listan över roller och funktioner.
+6. Klicka på ”Next” för att gå vidare till ”Features”-sidan och sedan på ”Next” igen.
+7. Läs igenom informationen om rollen/funktionen och klicka på ”Install”.
+8. Starta om servern.
+
+Steg 2: 
+Efter att du har installerat Active Directory Domain Services på din Windows Server 2019 måste du skapa en ny Active Directory-domän. Gör så här:
+
+1. Efter installationen av Active Directory Domain Services, kommer Server Manager att be dig att främja servern till en domänkontrollant. Klicka på knappen "Promote this server to a domain controller" eller navigera till "Configure this local server" och klicka på "Add roles and features". Välj "Promote this server to a domain controller" från installationstypen och klicka på "Next".
+2. Välj sedan "Add a new forest" och ange domännamnet för din nya Active Directory-domän.
+3. Ange lösenordet för Directory Services Restore Mode (DSRM) som kommer att användas om du behöver återställa din Active Directory-domän i händelse av en katastrof. Klicka på "Next".
+4. Välj den lämpliga domänfunktionnivån för din nya Active Directory-domän. Klicka på "Next". Behövs inte ändring.
+5. Välj de lämpliga platserna för Active Directory-databasen, loggarna och SYSVOL-mappen. Klicka på "Next". Behövs ingen ändring.
+6. Konfigurera de nätverksinställningar som är lämpliga för din nya Active Directory-domän. Klicka på "Next". Behövs ingen ändring.
+7. Gå igenom din sammanfattning och klicka på "Install" för att slutföra installationen.
+
+Steg 3:
+När din nya Active Directory-domän har skapats är det dags att konfigurera den. Följande är några grundläggande saker du kan göra:
+
+1. Skapa nya användarkonton och grupper.
+2. Skapa Organizational Units (OU) för att organisera dina användare, grupper och andra objekt.
+3. Konfigurera domänkontrollanter (Domain Controllers) för att hantera autentisering och auktorisering.
+4. Konfigurera Group Policy Objects (GPOs) för att styra beteendet hos användare och datorer i din domän.
